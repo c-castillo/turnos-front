@@ -14,9 +14,7 @@
         >Cambiar Servicio</v-btn>
       </v-toolbar-items>
 
-      <v-toolbar-items v-else>
-       <v-btn text @click="redirectToAdd">Agregar Servicio</v-btn>
-      </v-toolbar-items>
+
     </v-toolbar>
   </div>
 </template>
