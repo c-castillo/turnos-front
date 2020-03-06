@@ -45,7 +45,9 @@
             <v-list dense>
                 <!-- eslint-disable-next-line max-len -->
               <v-list-item name="hora.inicio" v-for="hora in turno" :key="hora.start" >
-                <v-list-item-content>{{ hora.inicio }}:00 - {{ hora.fin}}:00</v-list-item-content>
+                <v-list-item-content :class="getTurnoColor(hora.usuario_id)">
+                  {{ hora.inicio }}:00 - {{ hora.fin}}:00
+                  </v-list-item-content>
                 <v-list-item-content :class="getUserColor(hora.usuario_id)">
                   {{ getUserName(hora.usuario_id) }}
                   </v-list-item-content>
@@ -77,8 +79,8 @@ export default {
       this.formatTurnos(r);
     });
 
-    this.firstDay = moment().isoWeek(this.selectedSemana).day('Monday').format('YYYY-MM-DD');
-    this.lastDay = moment().isoWeek(this.selectedSemana).day('Sunday').format('YYYY-MM-DD');
+    this.firstDay = moment().isoWeeks(this.selectedSemana).day(1).format('DD/MM/YYYY');
+    this.lastDay = moment().isoWeeks(this.selectedSemana).day(7).format('DD/MM/YYYY');
   },
   computed: {
     ...mapGetters(['selectedServicio', 'selectedSemana', 'allUsuarios']),
@@ -101,14 +103,21 @@ export default {
       if (usuario && usuario.nombre) {
         return usuario.nombre;
       }
-      return 'Sin asignar';
+      return '⚠️';
     },
     getUserColor(id) {
       const usuario = this.usuarios.find((u) => u.id === id);
       if (usuario && usuario.color) {
         return usuario.color;
       }
-      return '';
+      return null;
+    },
+    getTurnoColor(id) {
+      const isUser = this.getUserColor(id);
+      if (isUser) {
+        return 'green';
+      }
+      return 'red';
     },
   },
   data() {
