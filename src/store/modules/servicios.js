@@ -38,7 +38,7 @@ export default {
       });
     },
 
-    fetchTurnosAction({ commit }, servicioId, semana) {
+    fetchTurnosAction({ commit }, { servicioId, semana }) {
       return new Promise((resolve, reject) => {
         ApiHelper.getTurnos(servicioId, semana)
           .then((response) => {
