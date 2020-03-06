@@ -4,7 +4,7 @@
       <v-row no-gutters style="height: 250px;">
         <v-col cols="4">
           <v-card class="pa-2" outlined tile>
-            <h3>{{ this.selectedServicio }}</h3>
+            <h3>{{ this.selectedServicio.nombre }}</h3>
             <h4>Semana {{ this.selectedSemana }}</h4>
             <h4>Del {{firstDay}} al {{lastDay}}</h4>
           </v-card>
@@ -72,10 +72,11 @@ export default {
   name: 'Home',
   components: {},
   created() {
-    this.$store.dispatch('fetchUsuariosAction', 1).then((r) => {
+    this.$store.dispatch('fetchUsuariosAction', this.selectedServicio.id).then((r) => {
       this.usuarios = r;
     });
-    this.$store.dispatch('fetchTurnosAction', { servicioId: 1, semana: this.selectedSemana }).then((r) => {
+    this.$store.dispatch('fetchTurnosAction',
+      { servicioId: this.selectedServicio.id, semana: this.selectedSemana }).then((r) => {
       this.formatTurnos(r);
     });
 

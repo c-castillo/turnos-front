@@ -113,7 +113,8 @@ export default {
     },
 
     saveSelectedServicioMutation(state, formData) {
-      state.selectedServicio = formData.servicio;
+      const index = state.servicios.findIndex((element) => element.id === formData.servicioId);
+      state.selectedServicio = state.servicios[index];
       state.selectedSemana = formData.semana;
     },
 

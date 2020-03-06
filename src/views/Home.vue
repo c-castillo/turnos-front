@@ -24,6 +24,7 @@
               <v-card-text>
           <v-select
               :items="servicios()"
+              item-value="value"
               label="Servicio"
               v-model="servicio"
             ></v-select>
@@ -57,7 +58,7 @@ export default {
     ...mapActions(['fetchAllServiciosAction', 'selectServicioAction']),
     selectServicio() {
       const servicioData = {
-        servicio: this.servicio,
+        servicioId: this.servicio,
         semana: this.semana,
       };
       this.selectServicioAction(servicioData)
@@ -78,7 +79,7 @@ export default {
       if (this.allServicios.length === 0) {
         this.fetchAllServiciosAction();
       }
-      return this.allServicios.map((s) => s.nombre);
+      return this.allServicios.map((s) => ({ text: s.nombre, value: s.id }));
     },
   },
   data() {
